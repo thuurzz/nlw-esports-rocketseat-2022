@@ -16,8 +16,8 @@ function Button(props: ButtonProps) {
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello Wold Mobile!</Text>
-      <Text>Este é um app criado com React Native!</Text>
+      <Text>Este aplicativo foi Codado usando React Native!</Text>
+      <Text>Py tha on!</Text>
       <Button title="Enviar" />
       <StatusBar style="auto" />
     </View>
