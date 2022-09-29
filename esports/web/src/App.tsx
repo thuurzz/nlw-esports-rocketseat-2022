@@ -1,6 +1,6 @@
 import "./styles/main.css";
 import logoImg from "./assets/logo-nlw-esports.svg";
-import { MagnifyingGlassPlus } from "phosphor-react";
+import { GameController, MagnifyingGlassPlus } from "phosphor-react";
 import { GameBanner } from "./components/GameBanner";
 import { CreateAdBanner } from "./components/CreateAdBanner";
 import { useEffect, useState } from "react";
@@ -55,8 +55,66 @@ function App() {
         <CreateAdBanner />
         <Dialog.Portal>
           <Dialog.Overlay className="bg-black/60 inset-0 fixed" />
-          <Dialog.Content className="fixed bg-[#2A2634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            aehuhueahueuhahueauh
+          <Dialog.Content className="fixed bg-[#2A2634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg shadow-black/25">
+            <Dialog.Title className="text-3xl font-black">
+              Publique um anúncio
+            </Dialog.Title>
+            <form>
+              <div>
+                <label htmlFor="game">Qual o game?</label>
+                <input
+                  type="text"
+                  id="game"
+                  placeholder="Selecione o game que deseja jogar"
+                />
+              </div>
+              <div>
+                <label htmlFor="name">Seu nome (nickname)?</label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Como te chamam dentro do game?"
+                />
+              </div>
+
+              <div>
+                <div>
+                  <label htmlFor="yearsPlaying">Joga há quantos anos?</label>
+                  <input
+                    type="number"
+                    id="yearsPlaying"
+                    placeholder="tudo bem ser zero"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="discord">Qual seu discord?</label>
+                  <input type="text" id="discord" placeholder="Usuario#0000" />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="weekDays">Quando costuma jogar?</label>
+              </div>
+              <div>
+                <label htmlFor="hourStart">Qual horario do dia?</label>
+              </div>
+              <div>
+                <input id="hourStart" type="time" placeholder="De" />
+                <input id="hourEnd" type="time" placeholder="Até" />
+              </div>
+              <div>
+                <input type="checkbox" />
+                Costumo me conectar ao chat de voz
+              </div>
+
+              <footer>
+                <button>Cancelar</button>
+                <button type="submit">
+                  <GameController />
+                  Encontrar Duo
+                </button>
+              </footer>
+            </form>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
