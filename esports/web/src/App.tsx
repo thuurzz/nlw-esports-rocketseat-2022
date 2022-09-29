@@ -99,14 +99,49 @@ function App() {
                 <div className="flex flex-col gap-2">
                   <label htmlFor="weekDays">Quando costuma jogar?</label>
 
-                  <div>
-                    <button title="Domingo">D</button>
-                    <button title="Segunda">S</button>
-                    <button title="Terça">T</button>
-                    <button title="Quarta">Q</button>
-                    <button title="Quinta">Q</button>
-                    <button title="Sexta">S</button>
-                    <button title="Sábado">S</button>
+                  <div className="grid grid-cols-4 gap-2">
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Domingo"
+                    >
+                      D
+                    </button>
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Segunda"
+                    >
+                      S
+                    </button>
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Terça"
+                    >
+                      T
+                    </button>
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Quarta"
+                    >
+                      Q
+                    </button>
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Quinta"
+                    >
+                      Q
+                    </button>
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Sexta"
+                    >
+                      S
+                    </button>
+                    <button
+                      className="w-8 h-8 rounded bg-zinc-900"
+                      title="Sábado"
+                    >
+                      S
+                    </button>
                   </div>
                 </div>
 
@@ -119,15 +154,20 @@ function App() {
                 </div>
               </div>
 
-              <div>
+              <div className="mt-2 flex gap-2 text-sm">
                 <Input type="checkbox" />
                 Costumo me conectar ao chat de voz
               </div>
 
-              <footer>
-                <button>Cancelar</button>
-                <button type="submit">
-                  <GameController />
+              <footer className="mt-4 flex justify-end gap-4">
+                <Dialog.Close className="bg-zinc-500 px-5 h-12 rounded-md font-semibold hover:bg-zinc-600">
+                  Cancelar
+                </Dialog.Close>
+                <button
+                  type="submit"
+                  className="bg-violet-500 px-5 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600"
+                >
+                  <GameController className="h-6 w-6" />
                   Encontrar Duo
                 </button>
               </footer>

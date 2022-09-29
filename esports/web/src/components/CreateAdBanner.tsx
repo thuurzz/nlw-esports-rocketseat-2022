@@ -10,7 +10,7 @@ export function CreateAdBanner() {
             Não encontrou seu duo ?
           </strong>
           <span className="text-zinc-400 block">
-            Publique um anúncio para encontrar novos players !
+            Publique um anúncio para encontrar novos players
           </span>
         </div>
         <Dialog.Trigger className="py-3 px-4 bg-violet-500 text-white rounded hover:bg-violet-600 flex items-center gap-3">
