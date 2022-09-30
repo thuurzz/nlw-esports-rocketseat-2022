@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { TouchableOpacity, View, Image, FlatList } from "react-native";
+import { TouchableOpacity, View, Image, FlatList, Text } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GameParams } from "../../@types/navigation";
@@ -58,7 +58,14 @@ export function Game() {
         <FlatList
           data={duos}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Duocard data={item} />}
+          renderItem={({ item }) => <Duocard data={item} onConect={() => {}} />}
+          horizontal
+          contentContainerStyle={styles.contentList}
+          style={styles.containerList}
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <Text style={styles.emptyListText}>Não há anúncios publicados ainda.</Text>
+          )}
         />
       </SafeAreaView>
     </Background>
