@@ -5,20 +5,39 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { Game } from "../App";
 import { useState, FormEvent } from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import axios from "axios";
 
 interface CreateAdModalProps {
   games: Game[];
+  onOpenChange: (isOpen: boolean) => void;
 }
 
-export function CreateAdModal({ games }: CreateAdModalProps) {
+export function CreateAdModal({ games, onOpenChange }: CreateAdModalProps) {
   const [weekDays, setWeekDays] = useState<string[]>([]);
   const [useVoiceChannel, setUseVoiceChannel] = useState<boolean>(false);
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
-    
+    // validação
+    if (!data.name) return;
+    try {
+      await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
+        name: data.name,
+        yearsPlaying: Number(data.yearsPlaying),
+        discord: data.discord,
+        weekDays: weekDays.map(Number),
+        hourStart: data.hourStart,
+        hourEnd: data.hourEnd,
+        useVoiceChannel: useVoiceChannel,
+      });
+      alert("Anúncio cadastrado com sucesso!");
+      onOpenChange(false);
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao criar");
+    }
   }
 
   return (
@@ -196,7 +215,7 @@ export function CreateAdModal({ games }: CreateAdModalProps) {
               Cancelar
             </Dialog.Close>
             <button
-              type="submit"
+              onSubmit={handleSubmit}
               className="bg-violet-500 px-5 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600"
             >
               <GameController className="h-6 w-6" />

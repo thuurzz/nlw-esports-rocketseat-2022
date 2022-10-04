@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Input } from "./components/Forms/Input";
 import { CreateAdModal } from "./components/CreateAdModal";
+import axios from "axios";
 
 export type Game = {
   id: string;
@@ -19,14 +20,17 @@ export type Game = {
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch("http://localhost:3333/games")
-      .then((resp) => resp.json())
-      .then((data) => {
-        setGames(data);
-      });
-  }, []);
+    axios("http://localhost:3333/games").then((response) => {
+      setGames(response.data);
+    });
+  }, [open]);
+
+  function handleCloseModal(isOpen: boolean) {
+    setOpen(false);
+  }
 
   return (
     <div className="max-w-[1344px] mx-auto flex items-center flex-col my-20">
@@ -52,9 +56,12 @@ function App() {
           );
         })}
       </div>
-      <Dialog.Root>
+      <Dialog.Root open={open} onOpenChange={setOpen}>
         <CreateAdBanner />
-        <CreateAdModal games={games} />
+        <CreateAdModal
+          games={games}
+          onOpenChange={() => handleCloseModal(open)}
+        />
       </Dialog.Root>
     </div>
   );
