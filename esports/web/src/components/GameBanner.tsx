@@ -6,7 +6,7 @@ interface GameBannerProps {
 
 export function GameBanner({ adsCount, bannerUrl, title }: GameBannerProps) {
   return (
-    <a href="" className="relative rounded-lg overflow-hidden">
+    <div className="relative rounded-lg overflow-hidden">
       <img src={bannerUrl} alt="" />
 
       <div className="w-full pt-16 pb-4 px-4 bg-nlw-game-gradient absolute bottom-0 left-0 right-0">
@@ -15,6 +15,6 @@ export function GameBanner({ adsCount, bannerUrl, title }: GameBannerProps) {
           {adsCount} anúncio(s)
         </span>
       </div>
-    </a>
+    </div>
   );
 }
