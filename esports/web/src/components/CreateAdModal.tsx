@@ -1,9 +1,10 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { GameController } from "phosphor-react";
+import { Check, GameController } from "phosphor-react";
 import { Input } from "./Forms/Input";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { Game } from "../App";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
+import * as Checkbox from "@radix-ui/react-checkbox";
 
 interface CreateAdModalProps {
   games: Game[];
@@ -11,8 +12,14 @@ interface CreateAdModalProps {
 
 export function CreateAdModal({ games }: CreateAdModalProps) {
   const [weekDays, setWeekDays] = useState<string[]>([]);
+  const [useVoiceChannel, setUseVoiceChannel] = useState<boolean>(false);
 
-  console.log(weekDays);
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const data = Object.fromEntries(formData);
+    
+  }
 
   return (
     <Dialog.Portal>
@@ -21,12 +28,13 @@ export function CreateAdModal({ games }: CreateAdModalProps) {
         <Dialog.Title className="text-3xl font-black">
           Publique um anúncio
         </Dialog.Title>
-        <form className="mt-8 flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="game" className="font-semibold">
               Qual o game?
             </label>
             <select
+              name="game"
               id="game"
               className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500 appearance-none"
               defaultValue=""
@@ -48,6 +56,7 @@ export function CreateAdModal({ games }: CreateAdModalProps) {
             <label htmlFor="name">Seu nome (nickname)?</label>
             <Input
               type="text"
+              name="name"
               id="name"
               placeholder="Como te chamam dentro do game?"
             />
@@ -58,13 +67,19 @@ export function CreateAdModal({ games }: CreateAdModalProps) {
               <label htmlFor="yearsPlaying">Joga há quantos anos?</label>
               <Input
                 type="number"
+                name="yearsPlaying"
                 id="yearsPlaying"
                 placeholder="tudo bem ser ZERO"
               />
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="discord">Qual seu discord?</label>
-              <Input type="text" id="discord" placeholder="Usuario#0000" />
+              <Input
+                type="text"
+                name="discord"
+                id="discord"
+                placeholder="Usuario#0000"
+              />
             </div>
           </div>
 
@@ -146,14 +161,33 @@ export function CreateAdModal({ games }: CreateAdModalProps) {
             <div className="flex flex-col gap-2 flex-1">
               <label htmlFor="hourStart">Qual horario do dia?</label>
               <div className="grid grid-cols-2 gap-2">
-                <Input id="hourStart" type="time" placeholder="De" />
-                <Input id="hourEnd" type="time" placeholder="Até" />
+                <Input
+                  name="hourStart"
+                  id="hourStart"
+                  type="time"
+                  placeholder="De"
+                />
+                <Input
+                  name="hourEnd"
+                  id="hourEnd"
+                  type="time"
+                  placeholder="Até"
+                />
               </div>
             </div>
           </div>
 
           <label className="mt-2 flex gap-2 text-sm">
-            <Input type="checkbox" />
+            <Checkbox.Root
+              onCheckedChange={(checked) =>
+                checked ? setUseVoiceChannel(true) : setUseVoiceChannel(false)
+              }
+              className="w-6 h-6 p-1 rounded bg-zinc-900"
+            >
+              <Checkbox.Indicator>
+                <Check className="w-4 h-4 text-emerald-400" />
+              </Checkbox.Indicator>
+            </Checkbox.Root>
             Costumo me conectar ao chat de voz
           </label>
 
