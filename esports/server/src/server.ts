@@ -14,7 +14,7 @@ app.use(
 );
 
 const prisma = new PrismaClient({
-  log: ["query"],
+  log: [],
 });
 
 app.get("/games", async (req, res) => {

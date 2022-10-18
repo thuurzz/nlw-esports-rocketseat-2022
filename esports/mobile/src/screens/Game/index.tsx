@@ -13,9 +13,11 @@ import { THEME } from "../../theme";
 import { Heading } from "../../components/Heading";
 import { Duocard, DuoProps } from "../../components/Duocard";
 import { useEffect, useState } from "react";
+import { DuoMatch } from "../../components/DuoMatch";
 
 export function Game() {
   const [duos, setDuos] = useState<DuoProps[]>([]);
+  const [discordDuoSelected, setDiscordDuoSelected] = useState<string>("A");
 
   const route = useRoute();
   const game = route.params as GameParams;
@@ -27,9 +29,16 @@ export function Game() {
   }
 
   useEffect(() => {
-    fetch(`http://10.0.0.193:3333/games/${game.id}/ads`)
-      .then((resp) => resp.json())
-      .then((data) => setDuos(data));
+    try {
+      fetch(`http://10.0.0.141:3333/games/${game.id}/ads`)
+        .then((resp) => resp.json())
+        .then((data) => setDuos(data));
+    } catch (error: any) {
+      console.log(
+        "There has been a problem with your fetch operation: " + error.message
+      );
+      throw error;
+    }
   }, []);
 
   return (
@@ -64,10 +73,18 @@ export function Game() {
           style={styles.containerList}
           showsHorizontalScrollIndicator={false}
           ListEmptyComponent={() => (
-            <Text style={styles.emptyListText}>Não há anúncios publicados ainda.</Text>
+            <Text style={styles.emptyListText}>
+              Não há anúncios publicados ainda.
+            </Text>
           )}
         />
       </SafeAreaView>
+
+      <DuoMatch
+        visible={discordDuoSelected.length > 0}
+        discord="thuurz#10101"
+        onClose={() => setDiscordDuoSelected("")}
+      />
     </Background>
   );
 }

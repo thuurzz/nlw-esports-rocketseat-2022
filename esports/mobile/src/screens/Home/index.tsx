@@ -15,9 +15,16 @@ export function Home() {
   const [games, setGames] = useState<GameCardProps[]>([]);
 
   useEffect(() => {
-    fetch("http://10.0.0.193:3333/games")
-      .then((resp) => resp.json())
-      .then((data) => setGames(data));
+    try {
+      fetch("http://10.0.0.141:3333/games")
+        .then((resp) => resp.json())
+        .then((data) => setGames(data));
+    } catch (error: any) {
+      console.log(
+        "There has been a problem with your fetch operation: " + error.message
+      );
+      throw error;
+    }
   }, []);
 
   const navigation = useNavigation();
