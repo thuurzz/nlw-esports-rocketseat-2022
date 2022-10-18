@@ -17,7 +17,7 @@ import { DuoMatch } from "../../components/DuoMatch";
 
 export function Game() {
   const [duos, setDuos] = useState<DuoProps[]>([]);
-  const [discordDuoSelected, setDiscordDuoSelected] = useState<string>("A");
+  const [discordDuoSelected, setDiscordDuoSelected] = useState<string>("");
 
   const route = useRoute();
   const game = route.params as GameParams;
@@ -26,6 +26,19 @@ export function Game() {
 
   function handleGoBack() {
     navigation.goBack();
+  }
+
+  async function getDiscordUser(adsId: string) {
+    try {
+      fetch(`http://10.0.0.141:3333/ads/${adsId}/discord`)
+        .then((resp) => resp.json())
+        .then((data) => setDiscordDuoSelected(data.discord));
+    } catch (error: any) {
+      console.log(
+        "There has been a problem with your fetch operation: " + error.message
+      );
+      throw error;
+    }
   }
 
   useEffect(() => {
@@ -67,7 +80,14 @@ export function Game() {
         <FlatList
           data={duos}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Duocard data={item} onConect={() => {}} />}
+          renderItem={({ item }) => (
+            <Duocard
+              data={item}
+              onConect={() => {
+                getDiscordUser(item.id);
+              }}
+            />
+          )}
           horizontal
           contentContainerStyle={styles.contentList}
           style={styles.containerList}
@@ -82,7 +102,7 @@ export function Game() {
 
       <DuoMatch
         visible={discordDuoSelected.length > 0}
-        discord="thuurz#10101"
+        discord={discordDuoSelected}
         onClose={() => setDiscordDuoSelected("")}
       />
     </Background>
